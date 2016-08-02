@@ -40,3 +40,19 @@ class TestDeletionFilter(TestCase):
         f.exclude_prefixes = ( 'BE' )
         f.include_prefixes = ( 'BEE' )
         self.assertRaises(RuntimeError, f, ['BEEN', 'BEAN'])
+
+class TestEntryFilter(TestCase):
+    def test_init(self):
+        f = EntryFilter()
+        self.assertIsNotNone(f.callset_filter_lut)
+
+    def test_call(self):
+        f = EntryFilter()
+        self.assertTrue(f('DEL_union', 'SI_BD_GARBAGE', ['YL_CN_CNVNATOR']))
+        self.assertTrue(f('DEL_union', 'YL_CN_CNVNATOR', ['SI_BD_GARBAGE', 'YL_CN_CNVNATOR2']))
+        self.assertFalse(f('DEL_union', 'YL_CN_CNVNATOR', ['YL_CN_CNVNATOR2', 'YL_CN_CNVNATOR3']))
+        self.assertTrue(f('DEL_pindel', 'FAKE', None))
+        self.assertFalse(f('NUMT_umich', 'FAKE', None))
+        self.assertRaises(KeyError, f, 'INVALID_CALLSET', 'FAKE', None)
+
+
