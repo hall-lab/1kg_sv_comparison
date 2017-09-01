@@ -8,7 +8,6 @@ Scripts utilized to prep data for comparison of calls from the svtools pipeline 
 * pysam (0.8.4)
 * bgzip (any version)
 * bcftools (>=1.2)
-* svtools
 * make (if you use the Makefile)
 
 # 1000 Genome Calls Preparation
