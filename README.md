@@ -11,6 +11,7 @@ Scripts utilized to prep data for comparison of calls from the svtools pipeline 
 * make (if you use the Makefile)
 
 # 1000 Genome Calls Preparation
+A Makefile is provide to run these steps. If the dependencies are met then you can run by typing `make all`.
 1. Download the calls
    ```
    curl -O ftp://ftp.ncbi.nlm.nih.gov/1000genomes/ftp/phase3/integrated_sv_map/ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.vcf.gz
