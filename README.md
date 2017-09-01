@@ -18,14 +18,20 @@ Scripts utilized to prep data for comparison of calls from the svtools pipeline 
    ```
 2. Convert to svtools/lumpy-sv compatible SVTYPE fields.
    ```
-   python 1kg_phase3_to_svtools_compat_svtype.py ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.vcf.gz | bgzip -c > ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.vcf.gz
+   python 1kg_phase3_to_svtools_compat_svtype.py \
+      ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.vcf.gz \
+      | bgzip -c > ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.vcf.gz
    ```
 3. Remove MEI insertions (relative to the reference)
    * These aren't compatible with svtools as they lack an END INFO field and the pipeline doesn't detect these.
    ```
-   bcftools view ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.vcf.gz -e 'SVTYPE=="ALU" || SVTYPE=="LINE1" || SVTYPE=="SVA"' | bgzip -c > ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.no_ins_of_mei.vcf.gz
+   bcftools view -e 'SVTYPE=="ALU" || SVTYPE=="LINE1" || SVTYPE=="SVA"' \
+      ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.vcf.gz - \
+      | bgzip -c > ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.no_ins_of_mei.vcf.gz
    ```
 4. Remove SV calls only detected by readdepth based algorithms.
    ```
-   python remove_read_depth_only.py ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.no_ins_of_mei.vcf.gz | bgzip -c > ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.non_rd_only.no_ins_of_mei.vcf.gz
+   python remove_read_depth_only.py \
+      ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.no_ins_of_mei.vcf.gz \
+      | bgzip -c > ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.non_rd_only.no_ins_of_mei.vcf.gz
    ```
