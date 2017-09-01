@@ -33,5 +33,6 @@ Scripts utilized to prep data for comparison of calls from the svtools pipeline 
    ```
    python remove_read_depth_only.py \
       ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.no_ins_of_mei.vcf.gz \
-      | bgzip -c > ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.non_rd_only.no_ins_of_mei.vcf.gz
+      | bgzip -c \
+      > ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.non_rd_only.no_ins_of_mei.vcf.gz
    ```
