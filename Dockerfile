@@ -1,11 +1,6 @@
 FROM ubuntu:16.04
 MAINTAINER Dave Larson <delarson@wustl.edu>
 
-# Volumes
-# VOLUME /build
-# VOLUME /release
-
-# bootstrap build dependencies
 RUN apt-get update -qq && \
     apt-get -y install apt-transport-https && \
     apt-get update -qq && \
