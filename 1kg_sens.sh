@@ -4,6 +4,7 @@ set -ueo pipefail
 
 OKG_BEDPE=$1
 EVAL_BEDPE=$2
+GENOME=$3
 
 SLOP=50
 BINDIR=$( dirname $0 )
@@ -15,7 +16,7 @@ PYTHON=python
 TOTAL_1KG=$(cat $OKG_BEDPE | grep -v '^#' | wc -l)
 TOTAL_UNFILTERED=$(cat $EVAL_BEDPE | grep -v '^#' | wc -l)
 TOTAL_FILTERED=$(cat $EVAL_BEDPE | grep -v '^#' | awk '{ if ($12 != "LOW") { print }}' | wc -l)
-OVERLAP_UNFILTERED=$(cat $EVAL_BEDPE | perl -ape 'if($_ !~ /^#/) { $F[1]-=1; $F[2]+=1; $F[4]-=1; $F[5]+=1; @F[1,4] = map { $_ < 0 ? 0 : $_ } ($F[1], $F[4]); $_=join("\t", @F)."\n"}' | $BEDTOOLS pairtopair -is -type both -slop $SLOP -rdn -a $OKG_BEDPE -b stdin | grep -v '^#' | $PYTHON $INTERSECT_SCRIPT -n 22 | cut -f1-11 | sort -u | wc -l)
+OVERLAP_UNFILTERED=$(cat $EVAL_BEDPE | perl -ape 'if($_ !~ /^#/) { $F[1]-=1; $F[2]+=1; $F[4]-=1; $F[5]+=1; @F[1,4] = map { $_ < 0 ? 0 : $_ } ($F[1], $F[4]); $_=join("\t", @F)."\n"}' | $BEDTOOLS slop -b 1 -g $GENOME -i stdin | $BEDTOOLS pairtopair -is -type both -slop $SLOP -rdn -a $OKG_BEDPE -b stdin | grep -v '^#' | $PYTHON $INTERSECT_SCRIPT -n 22 | cut -f1-11 | sort -u | wc -l)
 OVERLAP_FILTERED=$(cat $EVAL_BEDPE | awk '{ if ($12 != "LOW") { print }}' | perl -ape 'if($_ !~ /^#/) { $F[1]-=1; $F[2]+=1; $F[4]-=1; $F[5]+=1; @F[1,4] = map { $_ < 0 ? 0 : $_ } ($F[1], $F[4]); $_=join("\t", @F)."\n"}' | $BEDTOOLS pairtopair -is -type both -slop $SLOP -rdn -a $OKG_BEDPE -b stdin | grep -v '^#' | $PYTHON $INTERSECT_SCRIPT -n 22 | cut -f1-11 | sort -u | wc -l)
 FRACTION_UNFILTERED=$(awk "BEGIN { print $OVERLAP_UNFILTERED / $TOTAL_UNFILTERED }")
 SENS_UNFILTERED=$(awk "BEGIN { print $OVERLAP_UNFILTERED / $TOTAL_1KG }")
