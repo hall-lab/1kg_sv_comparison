@@ -2,6 +2,9 @@
 Scripts utilized to prep data for comparison of calls from the svtools pipeline to calls from the 1000 Genomes Project. This code is specific for the 1000 Genomes Phase 3 Integrated SV Map currently found here: ftp://ftp.ncbi.nlm.nih.gov/1000genomes/ftp/phase3/integrated_sv_map/ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.vcf.gz
 
 # Dependencies
+A Docker container containing all dependencies is available from Docker Hub as halllab/1kg_sv_comparison and a Dockerfile is contained within [this repo](Dockerfile).
+
+Alternatively, the following are pre-requisites:
 * curl
 * Python (2.7)
 * PyVCF (0.6.8)
