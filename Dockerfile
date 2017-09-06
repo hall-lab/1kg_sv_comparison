@@ -48,6 +48,6 @@ RUN BEDTOOLS_VERSION=2.23.0 \
 
 # SVTOOLS
 RUN pip install setuptools \
-    && pip install pysam==0.8.4 svtools==0.3.1
+    && pip install pysam==0.8.4 svtools==0.3.1 pyVCF
 
 CMD [ "/bin/bash" ]
