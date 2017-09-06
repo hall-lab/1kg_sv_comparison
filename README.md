@@ -8,6 +8,8 @@ Scripts utilized to prep data for comparison of calls from the svtools pipeline 
 * pysam (0.8.4)
 * bgzip (any version)
 * bcftools (>=1.2)
+* svtools (>=0.3.1)
+* perl (>=0.5.10)
 * make (if you use the Makefile)
 
 # 1000 Genome Calls Preparation
@@ -36,3 +38,33 @@ A Makefile is provide to run these steps. If the dependencies are met then you c
       | bgzip -c \
       > ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.non_rd_only.no_ins_of_mei.vcf.gz
    ```
+# Comparison of SV VCF to 1000 Genomes
+A wrapper script is provided to aid in the comparison of multiple samples.
+## Inputs
+   1. The 1000 Genomes VCF prepared above.
+   2. An evaluation VCF containing samples overlapping with the 1000 Genomes cohort.
+   3. A 2-column, tab-separated file where the first column is the sample name in the evaluation VCF and the second column is the sample name in the 1000 Genomes VCF. For example:
+      ``` 
+      H_IJ-NA19239-NA19239_B9	NA19239
+      ```
+## Invocation
+The script is called like:
+```
+bash 1kg_sens_multi.sh ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.non_rd_only.no_ins_of_mei.vcf.gz cohort.sv.gt.cn.pruned.reclassed.filtered.nosec.vcf.gz sample_name_in_1kg.map
+```
+
+## Results
+In the current working directory, a sub-directory for each 1000 Genomes sample is created. Inside each sub-directory will be three files.
+   1. A BEDPE of the 1000 Genomes call for the sample.
+   2. A BEDPE of the evaluation calls for the sample.
+   3. A file of calculated sensitivities which has structure as shown below:
+      ```
+      Unfiltered Total Calls	9586
+      Unfiltered Overlapping 1KG	1641
+      Unfiltered Fraction Overlapping 1KG	0.171187
+      Unfiltered 1KG Sensitivity	0.888949
+      Filtered Total Calls	3916
+      Filtered Overlapping 1KG	1559
+      Filtered Fraction Overlapping 1KG	0.39811
+      Filtered 1KG Sensitivity	0.844529
+      ```
