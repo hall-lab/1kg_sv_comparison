@@ -31,7 +31,7 @@ A Makefile is provide to run these steps. If the dependencies are met then you c
       ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.vcf.gz - \
       | bgzip -c > ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.no_ins_of_mei.vcf.gz
    ```
-4. Remove SV calls only detected by readdepth based algorithms.
+4. Remove SV calls only detected by read depth based algorithms.
    ```
    python remove_read_depth_only.py \
       ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.no_ins_of_mei.vcf.gz \
@@ -50,7 +50,10 @@ A wrapper script is provided to aid in the comparison of multiple samples.
 ## Invocation
 The script is called like:
 ```
-bash 1kg_sens_multi.sh ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.non_rd_only.no_ins_of_mei.vcf.gz cohort.sv.gt.cn.pruned.reclassed.filtered.nosec.vcf.gz sample_name_in_1kg.map
+bash 1kg_sens_multi.sh \
+   ALL.wgs.integrated_sv_map_v2.20130502.svs.genotypes.svtools_types.non_rd_only.no_ins_of_mei.vcf.gz \
+   cohort.sv.gt.cn.pruned.reclassed.filtered.nosec.vcf.gz \
+   sample_name_in_1kg.map
 ```
 
 ## Results
