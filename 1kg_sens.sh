@@ -6,6 +6,7 @@ OKG_BEDPE=$1
 EVAL_BEDPE=$2
 
 SLOP=50
+SLOP=$(( ${SLOP} - 1)) # adjust slop so we get a single overall value
 BINDIR=$( dirname $0 )
 
 INTERSECT_SCRIPT=${BINDIR}/filter_based_on_strand.py
